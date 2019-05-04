@@ -5,6 +5,8 @@ package jukebox;
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -12,7 +14,10 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -20,8 +25,11 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /*   If you don't have javazoom.jar in your project, you can download it from here: http://bit.ly/javazoom
  *   Right click your project and add it as a JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
-
+public class Jukebox implements Runnable, ActionListener {
+	JButton b = new JButton();
+	JButton button = new JButton();
+	Song song = new Song("music.mp3");
+	Song songtwo = new Song("songtwo.mp3");
     public void run() {
 
 		// 1. Find an mp3 on your computer or on the Internet.
@@ -36,6 +44,18 @@ public class Jukebox implements Runnable {
 		 * cover is clicked, stop the currently playing song, and play the one
 		 * that was selected.
 		 */
+    	JPanel p = new JPanel();
+
+    	JFrame f = new JFrame();
+    	f.setVisible(true);
+    	b.setText("play song one");
+    	button.setText("play song two");
+    	b.addActionListener(this);
+    	button.addActionListener(this);
+    	p.add(b);
+    	p.add(button);
+    	f.add(p);
+    	f.pack();
     }
     
     
@@ -44,6 +64,19 @@ public class Jukebox implements Runnable {
 		URL imageURL = getClass().getResource(fileName);
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource()==b) {
+			songtwo.stop();
+			song.play();
+		}else if(e.getSource()==button){
+			song.stop();
+			songtwo.play();
+		}
 	}
 
 }
