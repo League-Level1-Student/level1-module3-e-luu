@@ -5,7 +5,8 @@ car cara = new car(40,160,50,5);
 car carlos = new car(40,280,50,5);
 car carla = new car(40,400,50,5);
 void setup(){
-size(800,600);
+size(844,600);
+
 }
 
 void draw(){
@@ -17,6 +18,30 @@ carl.display();
 cara.display();
 carlos.display();
 carla.display();
+carl.mleft();
+cara.mright();
+carlos.mleft();
+carla.mright();
+if(carl.intersects(carl)){
+xp=300;
+yp=500;
+}
+if(cara.intersects(cara)){
+xp=300;
+yp=500;
+}
+if(carlos.intersects(carlos)){
+xp=300;
+yp=500;
+}
+if(carla.intersects(carla)){
+xp=300;
+yp=500;
+}
+if(yp==0){
+  textSize(50);
+text("you win!", 100,100);
+}
 }
 
 void keyPressed()
@@ -41,8 +66,8 @@ void keyPressed()
       }
 }
 void inside(){
-if(xp>800){
-xp = 800;
+if(xp>844){
+xp = 844;
 }
 if(xp<0){
 xp = 0;
@@ -73,8 +98,35 @@ this.size = s;
 }
 void mleft(){
 cxp-=speed;
+if(cxp<0){
+cxp=800;
+}
 }
 void mright(){
-cyp+=speed;
+cxp+=speed;
+if(cxp>844){
+cxp=0;
+}
+}
+int getx(){
+return cxp;
+}
+int gety(){
+return cyp;
+}
+int getsize(){
+return size;
+}
+
+boolean intersects(car car) {
+      if ((yp > car.gety() && yp < car.gety()+50) && (xp > car.getx() && xp < car.getx()+car.getsize()))
+      {
+             return true;
+      }
+      else 
+      {
+             return false;
+      }
+
 }
 }
